@@ -1,0 +1,31 @@
+{
+    "mobileEncryptSecForJWT":"4ce1b5d73ea0e81a9d39",
+    "maxRetry": 3,
+    "retryDelay": 1,
+    "userInfo": [
+        {
+            "email": "admin@krishimandi.com",
+            "password": "123456",
+            "role": "product_manager"
+        }
+    ],
+    "errorMessage": {
+        "productSavedSuccessfully": "product save successfully",
+        "invalidLoginDetails": "invalid login details",
+        "invalidJwtToken": "Jwt Token is not valid",
+        "invalidUserId": "User Id not valid",
+        "internalServerError": "Internal Server Error",
+        "otpSentFailure": "otp couldn't be sent please try again in few minutes",
+        "invalidOtp": "otp is not valid",
+        "productsNotFetched": "products couldn't be fetched"
+    },
+    "successMessages": {
+        "loginSuccess": "successfully logged in"
+    },
+    "errorCatchMsg": {
+        "10000": " :::: Error from AdminLoginService ::::",
+        "10001": " :::: Error from AdminLoginController ::::",
+        "10002": " :::: Error from addProductService ::::",
+        "10003": " :::: Error from addProductController ::::"
+    }
+}

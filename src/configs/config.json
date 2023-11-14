@@ -1,0 +1,36 @@
+{
+    "userFilePath": "../../users/",
+    "mobileEncryptSecForJWT":"4ce1b5d73ea0e81a9d39",
+    "maxRetry": 3,
+    "retryDelay": 1,
+    "jwtSecret":"1e8543bc9914586ddf6fb771",
+    "jwtExpiresIn": "2d",
+    "mongooseEncSecrets": {
+        "userSec": "0242ac120002",
+        "productSec": "c83d61b8ba16",
+        "keyValueTokenSec": "bae4e307afab"
+    },
+    "logs": {
+        "level": "debug"
+    },
+    "errorMessage": {
+        "invalidJwtToken": "Jwt Token is not valid",
+        "invalidUserId": "User Id not valid",
+        "internalServerError": "Internal Server Error",
+        "otpSentFailure":"otp couldn't be sent please try again in few minutes",
+        "invalidOtp": "otp is not valid"
+    },
+    "successMessages": {
+        "otpSentSuccess": "otp sent successfully",
+        "otpverifiedSuccessfully":"otp verified successfully"
+    },
+    "errorCatchMsg": {
+        "5001": " :::: Error from generateUnqIdForRequest ::::",
+        "5002": " :::: Error from verifyToken ::::",
+        "5003": " :::: Error from sendOtpController ::::",
+        "6000": " :::: Error from sendOtpService ::::",
+        "6001": " :::: Error from verifyOtpService ::::",
+        "5004": " :::: Error from listProductController ::::",
+        "5005": " :::: Error from listProductService ::::"
+    }
+}
