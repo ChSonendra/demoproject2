@@ -4,20 +4,11 @@ const userService = require('../utilServices/userService')
 async function addItemToCart(req) {
     try {
         console.log("req == ",req)
+        const uniqueID = Math.random().toString(36).substring(2, 8);
         const userId = await userService.getUserIdUsingMobile(req.userId);
         const cartItem = {
-            id: "657rf76rf6yuiuuy",
-            item:{
-                ProductId: "kjhxcdbsc",
-                name: "aalo",
-                type: "veg",
-                color: "allo callar",
-                quality: "3kg",
-                price: "92",
-                images: "12345",
-                about: "1234",
-                quantity:"1234"
-            }
+            id: uniqueID,
+            item:req.item
         }
         const res = await userService.addItemToCart(userId, cartItem)
         console.log(" res ==", res)
