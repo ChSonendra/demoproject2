@@ -1,10 +1,13 @@
 const config = require('../configs/config.json');
 const logger = require('../winston');
 const apiResponseFormatter = require('../configs/apiResponse')
+const removeItemFromcart = require('../services/removeItemFromCartservice')
+
 async function removeItemFromCart(retryAttempts, delay, req, res) {
     try {
         logger.info(`${req.requestId} : Inside sendOtpController Function`)
-         const result = await servicefunctioncall();
+        console.log(req)
+         const result = await removeItemFromcart.removeItemFromCart(req);
          if(result.status){
             logger.info(`${req.requestId} : Exiting sendOtpController Function`)
             res.status(apiResponseFormatter.apiSuccessStatus)
@@ -22,7 +25,7 @@ async function removeItemFromCart(retryAttempts, delay, req, res) {
     }
     catch (error) {
         if (retryAttempts > 0) {
-            logger.info(`${req.requestId} : ${config.errorCatchMsg[5003]} Error Message :::: ${err} :::: Retrying Attempt`)
+            logger.info(`${req.requestId} : ${config.errorCatchMsg[5003]} Error Message :::: ${error} :::: Retrying Attempt`)
             setTimeout(
                 async () => await removeItemFromCart(retryAttempts - 1, delay, req, res),
                 delay * 1000
@@ -30,7 +33,7 @@ async function removeItemFromCart(retryAttempts, delay, req, res) {
         }
         else
         {
-            logger.info(`${req.requestId} : ${config.errorCatchMsg[5003]} Error Message :::: ${err} : Final`)
+            logger.info(`${req.requestId} : ${config.errorCatchMsg[5003]} Error Message :::: ${error} : Final`)
             res.status(apiResponseFormatter.apiInternalServerErrorStatus)
             res.send(apiResponseFormatter.internalErrorResponse(config.errorMessage.internalServerError))
         }

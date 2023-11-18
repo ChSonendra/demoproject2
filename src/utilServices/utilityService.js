@@ -13,7 +13,7 @@ async function verifyToken(token) {
             const verifieduser = await jwt.verify(token, config.jwtSecret)
             console.log("verified user == ",verifieduser)
             const userId = await crypto.decrypt(verifieduser, config.mobileEncryptSecForJWT)
-            console.log("verified user == ",userId)
+            console.log("verified user == great ",userId)
             const uniqueID = Math.random().toString(36).substring(2, 8);
             const result = {
                 status: true,

@@ -1,6 +1,6 @@
 const config = require('../configs/adminConfigs.json');
 const logger = require('../winston');
-const utilityService = require('../services/utilityService');
+const utilityService = require('../utilServices/utilityService');
 const crypto = require('../providers/crypto')
 async function adminLoginService(req) {
     try {

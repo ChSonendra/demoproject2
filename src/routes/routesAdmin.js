@@ -5,7 +5,7 @@ const config = require('../configs/adminConfigs.json')
 
 const adminLoginController = require('../controller/adminLoginController')
 const addNewProduct = require('../controller/addNewProductController')
-const utilityService = require('../services/utilityService')
+const utilityService = require('../utilServices/utilityService')
 const { apiUserUnauthorizedStatus } = require('../configs/apiResponse')
 const { apiFailureResponse } = require('../../../eapvp/blockchain/dus-reports/dusAppAPI/node-app/src/middlewares/responseFormatter/apiResponse')
 

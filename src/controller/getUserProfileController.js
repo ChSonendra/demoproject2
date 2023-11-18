@@ -1,15 +1,14 @@
-const config = require('../configs/config.json');
+const config = require('../configs/adminConfigs.json');
 const logger = require('../winston');
 const apiResponseFormatter = require('../configs/apiResponse')
-const sendOtpMobile = require('../services/sendOtpService')
+const { getUserProfileService } = require('../services/getUserProfileService');
 
-
-async function sendOtpController(retryAttempts, delay, req, res) {
+async function getUserProfile(retryAttempts, delay, req, res) {
     try {
-        logger.info(`${req.requestId} : Inside sendOtpController Function`)
-         const result = await sendOtpMobile.sendOtpService(req);
+        logger.info(`${req.requestId} : Inside admin Login controller Function`)
+         const result = await getUserProfileService(req);
          if(result.status){
-            logger.info(`${req.requestId} : Exiting sendOtpController Function`)
+            logger.info(`${req.requestId} : Exiting  admin Login controller  Function`)
             res.status(apiResponseFormatter.apiSuccessStatus)
             res.send(apiResponseFormatter.apiSuccessResponse(
                 result.message,
@@ -18,26 +17,26 @@ async function sendOtpController(retryAttempts, delay, req, res) {
          }
          else
          {
-            logger.info(`${req.requestId} : Exiting sendOtpController Function`)
+            logger.info(`${req.requestId} : Exiting  admin Login controller  Function`)
             res.status(apiResponseFormatter.apiBadRequestStatus)
             res.send(apiResponseFormatter.apiFailureResponse(result.message))
          }
     }
     catch (error) {
         if (retryAttempts > 0) {
-            logger.info(`${req.requestId} : ${config.errorCatchMsg[5003]} Error Message :::: ${error} :::: Retrying Attempt`)
+            logger.info(`${req.requestId} : ${config.errorCatchMsg[10001]} Error Message :::: ${error} :::: Retrying Attempt`)
             setTimeout(
-                async () => await sendOtpController(retryAttempts - 1, delay, req, res),
+                async () => await getUserProfile(retryAttempts - 1, delay, req, res),
                 delay * 1000
             );
         }
         else
         {
-            logger.info(`${req.requestId} : ${config.errorCatchMsg[5003]} Error Message :::: ${error} : Final`)
+            logger.info(`${req.requestId} : ${config.errorCatchMsg[10001]} Error Message :::: ${error} : Final`)
             res.status(apiResponseFormatter.apiInternalServerErrorStatus)
             res.send(apiResponseFormatter.internalErrorResponse(config.errorMessage.internalServerError))
         }
     }
 }
 
-module.exports.sendOtpController = sendOtpController;
+module.exports.getUserProfile = getUserProfile;

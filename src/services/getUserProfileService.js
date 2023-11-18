@@ -5,35 +5,27 @@ const { v4: uuidv4 } = require('uuid');
 const utilityService = require('../utilServices/utilityService')
 const userService = require('../utilServices/userService');
 const { userModel } = require('../schemas/userModel');
-async function sendOtpService(req) {
+async function getUserProfileService(req) {
     try {
         const uniqId = uuidv4();
         const isUserExists = await userService.checkIfUserExistsUsingMobile(req.mobileNumber)
         console.log("user exist = ", isUserExists)
-        if (!isUserExists.status) {
-            const encryptedData = await crypto.encrypt(req.mobileNumber, config.mobileEncryptSecForJWT)
-            const userId = encryptedData.split('').reverse().join('');
-            const newUser = new userModel({
-                userId: userId,
-                unqId: uniqId,
-                email: "",
-                mobile: req.mobileNumber,
-            })
-            await newUser.save();
-            const res = await userService.addMobileNumber(req.mobileNumber, userId)
+        if (isUserExists.status) {
+           const user = await userService.fetchUserObject(req.mobileNumber)
             //TO DO :::: otp send service will be integrated here 
-            if (res.status) {
+            console.log("usert === ",user)
+            if (user.status) {
                 const result = {
                     status: true,
-                    message: "creates user Successfully",
-                    payload: {}
+                    message: "user fetched Successfully",
+                    payload: user.payload
                 }
                 return result;
             }
             else {
                 const result = {
                     status: false,
-                    message: "issue while creating user"
+                    message: "couldn't fetch user"
                 }
                 return result;
             }
@@ -42,7 +34,7 @@ async function sendOtpService(req) {
         else {
             const result = {
                 status: false,
-                message: "user Already Exists"
+                message: "user doesn't Exists"
             }
             return result;
         }
@@ -57,4 +49,4 @@ async function sendOtpService(req) {
     }
 }
 
-module.exports.sendOtpService = sendOtpService
+module.exports.getUserProfileService = getUserProfileService

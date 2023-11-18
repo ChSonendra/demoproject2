@@ -1,14 +1,11 @@
 const config = require('../configs/config.json');
 const logger = require('../winston');
 const crypto = require('../providers/crypto')
-const utilityService = require('../services/utilityService')
+const utilityService = require('../utilServices/utilityService')
 async function verifyOtp(req) {
     try {
         logger.info(`${req.requestId} In verify otp Service Function`)
         let result;
-        // mongo db integration for otp verification
-        //
-        // that will return the otp sent- to the number
         if (req.otp == "223455") {
             const encryptedData = await crypto.encrypt(req.mobileNumber, config.mobileEncryptSecForJWT)
             const token = await utilityService.generateToken(encryptedData)

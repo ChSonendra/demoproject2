@@ -5,7 +5,7 @@ const { v4: uuidv4 } = require('uuid');
 const utilityService = require('../utilServices/utilityService')
 const userService = require('../utilServices/userService');
 const { userModel } = require('../schemas/userModel');
-async function sendOtpService(req) {
+async function createUserService(req) {
     try {
         const uniqId = uuidv4();
         const isUserExists = await userService.checkIfUserExistsUsingMobile(req.mobileNumber)
@@ -57,4 +57,4 @@ async function sendOtpService(req) {
     }
 }
 
-module.exports.sendOtpService = sendOtpService
+module.exports.createUserService = createUserService

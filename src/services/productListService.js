@@ -1,7 +1,5 @@
 const config = require('../configs/adminConfigs.json');
 const logger = require('../winston');
-const utilityService = require('../services/utilityService');
-const crypto = require('../providers/crypto')
 const { productModel } = require('../schemas/productModel')
 async function listProducts(req) {
     try {

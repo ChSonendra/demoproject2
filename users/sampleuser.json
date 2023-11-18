@@ -5,18 +5,8 @@
     "mobile": [],
     "mobile_verified": false,
     "email_verified": false,
-    "cart": {
-        "id": "",
-        "items": []
-    },
-    "orders": {
-        "orderListId": "",
-        "orderList": []
-    },
-    "addresses": [{
-
-    }],
-    "interests":{
-
-    } 
+    "cart": {},
+    "orders": {},
+    "addresses": {},
+    "interests":{} 
 }

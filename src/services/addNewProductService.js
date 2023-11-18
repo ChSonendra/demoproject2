@@ -1,7 +1,7 @@
 const config = require('../configs/adminConfigs.json');
 const logger = require('../winston');
 const { productModel } = require('../schemas/productModel')
-const utilityService = require('../services/utilityService');
+const utilityService = require('../utilServices/utilityService');
 const { v4: uuidv4 } = require('uuid');
 const mongoose = require('mongoose')
 async function addProductService(req) {

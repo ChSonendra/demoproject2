@@ -1,36 +1,47 @@
 const config = require('../configs/adminConfigs.json');
 const logger = require('../winston');
-const utilityService = require('../services/utilityService');
-async function adminLoginService(req) {
+const userService = require('../utilServices/userService')
+async function addItemToCart(req) {
     try {
-        logger.info(`${req.requestId} In admin login Service Function`)
-        for (const user of config.userInfo) {
-            if (user.email === req.email && user.password === req.password) {
-                const tokendetails = JSON.stringify(user);
-                const token = await utilityService.generateToken(tokendetails);
-                result = {
-                    status: true,
-                    payload: {
-                        token: token
-                    },
-                    message: config.successMessages.loginSuccess
-                }
-                logger.info(`${req.requestId} Exiting admin login Service Function`)
-                return result;
+        console.log("req == ",req)
+        const userId = await userService.getUserIdUsingMobile(req.userId);
+        const cartItem = {
+            id: "657rf76rf6yuiuuy",
+            item:{
+                ProductId: "kjhxcdbsc",
+                name: "aalo",
+                type: "veg",
+                color: "allo callar",
+                quality: "3kg",
+                price: "92",
+                images: "12345",
+                about: "1234",
+                quantity:"1234"
             }
         }
-        result = {
-            status: false,
-            message: config.errorMessage.invalidLoginDetails
+        const res = await userService.addItemToCart(userId, cartItem)
+        console.log(" res ==", res)
+        if(res.status){
+            return {
+                status:true,
+                message:"item added to cart",
+                payload: {}
+            }
         }
-        logger.info(`Exiting admin login Service Function`)
-        return result;
+        else
+        {
+            return {
+                status:false,
+                message:"couldn't be added"
+            }
+        }
+
     }
     catch (error) {
         console.log(error)
-        logger.info(`${req.requestId} : ${config.errorCatchMsg[10000]} Error Message :::: ${error}`)
-        throw new Error(err);
+        // logger.info(`${req.} : ${config.errorCatchMsg[10000]} Error Message :::: ${error}`)
+        throw new Error(error);
     }
 }
 
-module.exports.adminLoginService = adminLoginService
+module.exports.addItemToCart = addItemToCart
