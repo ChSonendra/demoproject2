@@ -14,7 +14,7 @@ const getUserProfileController = require('../controller/getUserProfileController
 
 const utilityService = require('../utilServices/utilityService')
 const { apiUserUnauthorizedStatus } = require('../configs/apiResponse')
-const { apiFailureResponse } = require('../../../eapvp/blockchain/dus-reports/dusAppAPI/node-app/src/middlewares/responseFormatter/apiResponse')
+const { apiFailureResponse } = require('../providers/apiResponse')
 
 // router.use((req, res, next) => {
 //   next()
