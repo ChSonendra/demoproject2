@@ -1,5 +1,5 @@
 {
-    "userFilePath": "../users/",
+    "userFilePath": "users/",
     "mobileEncryptSecForJWT":"4ce1b5d73ea0e81a9d39",
     "maxRetry": 3,
     "retryDelay": 1,

@@ -121,8 +121,10 @@ async function addName(userId, name) {
     try {
         const fileContent = await fileService.readFile(currentDir + "/" + config.userFilePath + userId + ".json");
         if (fileContent.status) {
+            console.log("user id ",userId)
             const jsonData = JSON.parse(fileContent.data);
-            jsonData.userId.name = name
+            console.log("new var",jsonData)
+            jsonData[userId].name = name
             await writeFileAsync(currentDir + "/" + config.userFilePath + userId + ".json", JSON.stringify(jsonData))
             return { status: true }
         }
@@ -135,8 +137,9 @@ async function addName(userId, name) {
 
     }
     catch (error) {
-        logger.info(`${req.requestId} : ${config.errorCatchMsg[6001]} Error Message :::: ${err}`)
-        throw new Error(err);
+        // logger.info(`${req.requestId} : ${config.errorCatchMsg[6001]} Error Message :::: ${err}`)
+        console.log("error == ",error)
+        throw new Error(error);
     }
 }
 
@@ -145,8 +148,8 @@ async function addEmail(userId, email) {
         const fileContent = await fileService.readFile(currentDir + "/" + config.userFilePath + userId + ".json");
         if (fileContent.status) {
             const jsonData = JSON.parse(fileContent.data);
-            jsonData.userId.email = email
-            jsonData.userId.email_verified = true
+            jsonData[userId].email = email
+            jsonData[userId].email_verified = true
             await writeFileAsync(currentDir + "/" + config.userFilePath + userId + ".json", JSON.stringify(jsonData))
             return { status: true }
         }
@@ -254,6 +257,60 @@ async function addItemToCart(userId, item) {
     }
 }
 
+async function increaseCartQuantity(userId, itemId) {
+    try {
+        const fileContent = await fileService.readFile(currentDir + "/" + config.userFilePath + userId + ".json");
+        if (fileContent.status) {
+            let jsonData = JSON.parse(fileContent.data);
+            console.log("json data", jsonData)
+            let quan = Number(jsonData[`${userId}`].cart[`${itemId}`].quantity)
+            jsonData[`${userId}`].cart[`${itemId}`].quantity = (quan + 1).toString()
+            await writeFileAsync(currentDir + "/" + config.userFilePath + userId + ".json", JSON.stringify(jsonData))
+            return { status: true }
+        }
+        else {
+            return {
+                status: false,
+                message: "no record found"
+            }
+        }
+    }
+    catch (error) {
+        console.log("error =", error)
+        // logger.info(`${req.requestId} : ${config.errorCatchMsg[6001]} Error Message :::: ${err}`)
+        throw new Error(error);
+    }
+}
+
+async function decreaseCartQuantity(userId, itemId) {
+    try {
+        const fileContent = await fileService.readFile(currentDir + "/" + config.userFilePath + userId + ".json");
+        if (fileContent.status) {
+            let jsonData = JSON.parse(fileContent.data);
+            console.log("json data", jsonData)
+            let quan = Number(jsonData[`${userId}`].cart[`${itemId}`].quantity)
+            if(quan == 1) {
+               await deleteItemFromCart(userId,itemId)
+               return { status: true }
+            }
+            jsonData[`${userId}`].cart[`${itemId}`].quantity = (quan - 1).toString()
+            await writeFileAsync(currentDir + "/" + config.userFilePath + userId + ".json", JSON.stringify(jsonData))
+            return { status: true }
+        }
+        else {
+            return {
+                status: false,
+                message: "no record found"
+            }
+        }
+    }
+    catch (error) {
+        console.log("error =", error)
+        // logger.info(`${req.requestId} : ${config.errorCatchMsg[6001]} Error Message :::: ${err}`)
+        throw new Error(error);
+    }
+}
+
 async function deleteItemFromCart(userId, itemId) {
     try {
         const fileContent = await fileService.readFile(currentDir+ "/" + config.userFilePath + userId + ".json");
@@ -289,7 +346,7 @@ async function addAddress(userId, address) {
         const fileContent = await fileService.readFile(currentDir + "/" + config.userFilePath + userId + ".json");
         if (fileContent.status) {
             let jsonData = JSON.parse(fileContent.data);
-            jsonData.addresses[`${address.id}`] = address.item
+            jsonData[`${userId}`].addresses[`${address.id}`] = address.address
             await writeFileAsync(currentDir + "/" + config.userFilePath + userId + ".json", JSON.stringify(jsonData))
             return { status: true }
         }
@@ -311,7 +368,7 @@ async function removeAddress(userId, addressId) {
         const fileContent = await fileService.readFile(currentDir + "/" + config.userFilePath + userId + ".json");
         if (fileContent.status) {
             let jsonData = JSON.parse(fileContent.data);
-            delete jsonData.addresses[`${addressId}`]
+            delete jsonData[userId].addresses[`${addressId}`]
             await writeFileAsync(currentDir + "/" + config.userFilePath + userId + ".json", JSON.stringify(jsonData))
             return { status: true }
         }
@@ -323,8 +380,8 @@ async function removeAddress(userId, addressId) {
         }
     }
     catch (error) {
-        logger.info(`${req.requestId} : ${config.errorCatchMsg[6001]} Error Message :::: ${err}`)
-        throw new Error(err);
+        // logger.info(`${req.requestId} : ${config.errorCatchMsg[6001]} Error Message :::: ${err}`)
+        throw new Error(error);
     }
 }
 
@@ -391,6 +448,8 @@ module.exports.checkIfUserExistsUsingMobile = checkIfUserExistsUsingMobile
 module.exports.checkIfUserExistsUsingUserId = checkIfUserExistsUsingUserId
 module.exports.getUserIdUsingMobile = getUserIdUsingMobile
 module.exports.fetchUserObject = fetchUserObject
+module.exports.increaseCartQuantity = increaseCartQuantity
+module.exports.decreaseCartQuantity = decreaseCartQuantity
 // // addMobileNumber("9758568697");
 // // updateMobileNumber("a3da9b008c7ce4c69da11df6887fe217", "9369318609")
 // addName("a3da9b008c7ce4c69da11df6887fe217", "chirag")

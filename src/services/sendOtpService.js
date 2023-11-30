@@ -16,7 +16,7 @@ async function sendOtpService(req) {
             const newUser = new userModel({
                 userId: userId,
                 unqId: uniqId,
-                email: "",
+                email: "defaultfornow",
                 mobile: req.mobileNumber,
             })
             await newUser.save();

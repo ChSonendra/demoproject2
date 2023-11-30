@@ -1,16 +1,11 @@
 const config = require('../configs/adminConfigs.json');
 const logger = require('../winston');
 const userService = require('../utilServices/userService')
-async function addItemToCart(req) {
+async function removeAddress(req) {
     try {
         console.log("req == ",req)
-        const uniqueID = req.item.ProductId;
         const userId = await userService.getUserIdUsingMobile(req.userId);
-        const cartItem = {
-            id: uniqueID,
-            item:req.item
-        }
-        const res = await userService.addItemToCart(userId, cartItem)
+        const res = await userService.removeAddress(userId, req.addressId)
         console.log(" res ==", res)
         if(res.status){
             return {
@@ -35,4 +30,4 @@ async function addItemToCart(req) {
     }
 }
 
-module.exports.addItemToCart = addItemToCart
+module.exports.removeAddress = removeAddress

@@ -1,16 +1,18 @@
 const config = require('../configs/adminConfigs.json');
 const logger = require('../winston');
 const userService = require('../utilServices/userService')
-async function addItemToCart(req) {
+async function changeCartItemQuantity(req) {
     try {
         console.log("req == ",req)
-        const uniqueID = req.item.ProductId;
         const userId = await userService.getUserIdUsingMobile(req.userId);
-        const cartItem = {
-            id: uniqueID,
-            item:req.item
+        let res;
+        if(req.changeType == "increase"){
+           res = await userService.increaseCartQuantity(userId, req.itemId)
         }
-        const res = await userService.addItemToCart(userId, cartItem)
+        else
+        {
+            res = await userService.decreaseCartQuantity(userId, req.itemId)
+        }
         console.log(" res ==", res)
         if(res.status){
             return {
@@ -35,4 +37,4 @@ async function addItemToCart(req) {
     }
 }
 
-module.exports.addItemToCart = addItemToCart
+module.exports.changeCartItemQuantity = changeCartItemQuantity

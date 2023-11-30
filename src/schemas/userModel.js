@@ -5,7 +5,6 @@ const userSchema = new mongoose.Schema({
     unqId: String,
     email: {
         type: String,
-        unique: true, 
     },
     mobile: {
         type: String,

@@ -1,21 +1,21 @@
 const config = require('../configs/adminConfigs.json');
 const logger = require('../winston');
 const userService = require('../utilServices/userService')
-async function addItemToCart(req) {
+async function addAddress(req) {
     try {
         console.log("req == ",req)
-        const uniqueID = req.item.ProductId;
+        const uniqueID = Math.random().toString(36).substring(2, 8);
         const userId = await userService.getUserIdUsingMobile(req.userId);
-        const cartItem = {
+        const address = {
             id: uniqueID,
-            item:req.item
+            address: req.address
         }
-        const res = await userService.addItemToCart(userId, cartItem)
+        const res = await userService.addAddress(userId, address)
         console.log(" res ==", res)
         if(res.status){
             return {
                 status:true,
-                message:"item added to cart",
+                message:"address added to address list",
                 payload: {}
             }
         }
@@ -35,4 +35,4 @@ async function addItemToCart(req) {
     }
 }
 
-module.exports.addItemToCart = addItemToCart
+module.exports.addAddress = addAddress

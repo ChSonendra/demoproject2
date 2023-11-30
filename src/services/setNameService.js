@@ -1,21 +1,16 @@
 const config = require('../configs/adminConfigs.json');
 const logger = require('../winston');
 const userService = require('../utilServices/userService')
-async function addItemToCart(req) {
+async function setName(req) {
     try {
         console.log("req == ",req)
-        const uniqueID = req.item.ProductId;
         const userId = await userService.getUserIdUsingMobile(req.userId);
-        const cartItem = {
-            id: uniqueID,
-            item:req.item
-        }
-        const res = await userService.addItemToCart(userId, cartItem)
+        const res = await userService.addName(userId, req.name)
         console.log(" res ==", res)
         if(res.status){
             return {
                 status:true,
-                message:"item added to cart",
+                message:"name set successfully",
                 payload: {}
             }
         }
@@ -23,7 +18,7 @@ async function addItemToCart(req) {
         {
             return {
                 status:false,
-                message:"couldn't be added"
+                message:"couldn't add name"
             }
         }
 
@@ -35,4 +30,4 @@ async function addItemToCart(req) {
     }
 }
 
-module.exports.addItemToCart = addItemToCart
+module.exports.setName = setName

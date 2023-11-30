@@ -1,12 +1,13 @@
 const config = require('../configs/config.json');
 const logger = require('../winston');
 const apiResponseFormatter = require('../configs/apiResponse')
-const verifyOtpService = require('../services/verifyOtpService')
+const setNameService = require('../services/setNameService')
 
-async function verifyOtpController(retryAttempts, delay, req, res) {
+async function setNameController(retryAttempts, delay, req, res) {
     try {
         logger.info(`${req.requestId} : Inside sendOtpController Function`)
-         const result = await verifyOtpService.verifyOtp(req);
+        console.log(req)
+         const result = await setNameService.setName(req);
          if(result.status){
             logger.info(`${req.requestId} : Exiting sendOtpController Function`)
             res.status(apiResponseFormatter.apiSuccessStatus)
@@ -26,7 +27,7 @@ async function verifyOtpController(retryAttempts, delay, req, res) {
         if (retryAttempts > 0) {
             logger.info(`${req.requestId} : ${config.errorCatchMsg[5003]} Error Message :::: ${error} :::: Retrying Attempt`)
             setTimeout(
-                async () => await verifyOtpController(retryAttempts - 1, delay, req, res),
+                async () => await setNameController(retryAttempts - 1, delay, req, res),
                 delay * 1000
             );
         }
@@ -39,4 +40,4 @@ async function verifyOtpController(retryAttempts, delay, req, res) {
     }
 }
 
-module.exports.verifyOtpController = verifyOtpController;
+module.exports.setNameController = setNameController;
