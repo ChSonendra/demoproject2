@@ -135,6 +135,21 @@ router.post('/changeCartItemQuantit',async  (req, res) => {
   }
 })
 
+router.post('/removeItemFromCart',async  (req, res) => {
+  const userInfo = await utilityService.verifyToken(req.headers.authorization);
+  if(userInfo.status){
+    req.body.requestId = userInfo.unqId
+    req.body.userId = userInfo.userId
+    console.log("kcfnkjcv ",req.body.userId)
+    removeItemFromCart.removeItemFromCart(config.maxRetry, config.retryDelay, req.body, res)
+  }
+  else
+  {
+    res.status(apiUserUnauthorizedStatus)
+    res.send(apiFailureResponse(userInfo.message))
+  }
+})
+
 router.post('/addAddress',async (req, res) => {
   const userInfo = await utilityService.verifyToken(req.headers.authorization);
   if(userInfo.status){
