@@ -24,7 +24,7 @@ async function fetchUserObject(mobileNumber) {
         }
     }
     catch (error) {
-        console.log("Error in fetch user");
+        console.log("Error in fetch user", error);
     }
 
 
@@ -35,8 +35,6 @@ async function getUserIdUsingMobile(mobileNumber) {
     const document = await userModel.findOne(query);
     return document.userId;
 }
-
-
 
 async function checkIfUserExistsUsingMobile(mobileNumber) {
     const query = { mobile: mobileNumber };
@@ -239,6 +237,7 @@ async function addItemToCart(userId, item) {
         if (fileContent.status) {
             let jsonData = JSON.parse(fileContent.data);
             console.log("json data", jsonData)
+            item.item.cartQuantity = 1
             jsonData[`${userId}`].cart[`${item.id}`] = item.item
             await writeFileAsync(currentDir + "/" + config.userFilePath + userId + ".json", JSON.stringify(jsonData))
             return { status: true }
@@ -263,8 +262,8 @@ async function increaseCartQuantity(userId, itemId) {
         if (fileContent.status) {
             let jsonData = JSON.parse(fileContent.data);
             console.log("json data", jsonData)
-            let quan = Number(jsonData[`${userId}`].cart[`${itemId}`].quantity)
-            jsonData[`${userId}`].cart[`${itemId}`].quantity = (quan + 1).toString()
+            let quan = Number(jsonData[`${userId}`].cart[`${itemId}`].cartQuantity)
+            jsonData[`${userId}`].cart[`${itemId}`].cartQuantity = (quan + 1).toString()
             await writeFileAsync(currentDir + "/" + config.userFilePath + userId + ".json", JSON.stringify(jsonData))
             return { status: true }
         }
@@ -288,12 +287,12 @@ async function decreaseCartQuantity(userId, itemId) {
         if (fileContent.status) {
             let jsonData = JSON.parse(fileContent.data);
             console.log("json data", jsonData)
-            let quan = Number(jsonData[`${userId}`].cart[`${itemId}`].quantity)
+            let quan = Number(jsonData[`${userId}`].cart[`${itemId}`].cartQuantity)
             if(quan == 1) {
                await deleteItemFromCart(userId,itemId)
                return { status: true }
             }
-            jsonData[`${userId}`].cart[`${itemId}`].quantity = (quan - 1).toString()
+            jsonData[`${userId}`].cart[`${itemId}`].cartQuantity = (quan - 1).toString()
             await writeFileAsync(currentDir + "/" + config.userFilePath + userId + ".json", JSON.stringify(jsonData))
             return { status: true }
         }
@@ -337,9 +336,6 @@ async function deleteItemFromCart(userId, itemId) {
         throw new Error(error);
     }
 }
-
-
-
 
 async function addAddress(userId, address) {
     try {

@@ -3,6 +3,7 @@ const logger = require('../winston');
 const userService = require('../utilServices/userService')
 async function removeItemFromCart(req) {
     try {
+        console.log("great === ")
         const userId = await userService.getUserIdUsingMobile(req.userId);
         const res = await userService.deleteItemFromCart(userId, req.itemId)
         if(res.status){

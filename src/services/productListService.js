@@ -5,6 +5,7 @@ async function listProducts(req) {
     try {
         const product = await productModel.find({});
             console.log("data == ",product)
+            console.log("congress ")
             return {
                 status: true,
                 message: config.successMessages.productsFetchedSuccessfully,

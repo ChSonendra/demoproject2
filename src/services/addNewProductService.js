@@ -9,7 +9,7 @@ async function addProductService(req) {
         const uniqueID = uuidv4();
         logger.info(`${req.requestId} In admin login Service Function`)
         const newProduct = new productModel({
-            id: uniqueID,
+            productId: uniqueID,
             name: req.name,
             addedBy: req.addedBy,
             type: req.type,
