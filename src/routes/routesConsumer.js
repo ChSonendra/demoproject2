@@ -2,7 +2,7 @@ const express = require('express')
 const router = express.Router()
 const logger = require('../winston')
 const config = require('../configs/config.json')
-
+const apiResponseFormatter = require('../configs/apiResponse')
 const sendOtpController = require('../controller/sendOtpMobileController')
 const verifyOtpController = require('../controller/verifyOtpController')
 const productListController = require('../controller/productListController')
@@ -23,9 +23,6 @@ const utilityService = require('../utilServices/utilityService')
 const { apiUserUnauthorizedStatus } = require('../configs/apiResponse')
 const { apiFailureResponse } = require('../providers/apiResponse')
 
-// router.use((req, res, next) => {
-//   next()
-// })
 router.post('/createUser',async  (req, res) => {
     req.body.requestId = "usrcrt"
     console.log("great n dcj ",req.body)
@@ -76,6 +73,7 @@ router.post('/setEmail', async (req, res) => {
 })
 
 router.post('/getUserProfile', async (req, res) => {
+  console.log("token +++++++++++++++++++++++++++++++++++++  ",req.headers.authorization)
   const userInfo = await utilityService.verifyToken(req.headers.authorization);
   if(userInfo.status){
     req.body.requestId = userInfo.unqId
@@ -171,6 +169,7 @@ router.post('/removeAddress',async (req, res) => {
     req.body.requestId = userInfo.unqId
     req.body.userId = userInfo.userId
     console.log("kjcnsdkjnc ---=== ",req.body)
+    console.log(" ====== +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++")
     removeAddressController.removeAddressController(config.maxRetry, config.retryDelay, req.body, res)
   }
   else
@@ -180,13 +179,17 @@ router.post('/removeAddress',async (req, res) => {
   }
 })
 
-router.post('/placeOrder',async (req, res) => {
-  const userInfo = await utilityService.verifyToken(req.headers.authorization);
+router.post('/verifytoken',async (req, res) => {
+  const userInfo = await utilityService.verifyToken(req.body.token);
+  console.log("status == ",userInfo)
+  const payload = {
+       userId: userInfo.userId
+  }
   if(userInfo.status){
-    req.body.requestId = userInfo.unqId
-    req.body.userId = userInfo.userId
-    console.log("kjcnsdkjnc ---=== ",req.body)
-    placeOrderController.placeOrderController(config.maxRetry, config.retryDelay, req.body, res)
+    res.send(apiResponseFormatter.apiSuccessResponse(
+      "token Verified successfully",
+      payload
+  ))
   }
   else
   {

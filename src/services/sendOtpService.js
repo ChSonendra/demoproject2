@@ -11,18 +11,12 @@ async function sendOtpService(req) {
         const isUserExists = await userService.checkIfUserExistsUsingMobile(req.mobileNumber)
         console.log("user exist = ", isUserExists)
         if (!isUserExists.status) {
-            const encryptedData = await crypto.encrypt(req.mobileNumber, config.mobileEncryptSecForJWT)
+            const encryptedData = await crypto.encrypt(req.mobileNumber, config.secrets.mobileEncryptSecForJWT)
             const userId = encryptedData.split('').reverse().join('');
-            const newUser = new userModel({
-                userId: userId,
-                unqId: uniqId,
-                email: "defaultfornow",
-                mobile: req.mobileNumber,
-            })
-            await newUser.save();
             const res = await userService.addMobileNumber(req.mobileNumber, userId)
             //TO DO :::: otp send service will be integrated here 
             if (res.status) {
+                
                 const result = {
                     status: true,
                     message: "creates user Successfully",
@@ -46,9 +40,6 @@ async function sendOtpService(req) {
             }
             return result;
         }
-
-        logger.info(`${req.requestId} verify send otp Service Function`)
-        return result;
     }
     catch (error) {
         console.log("error === ", error)

@@ -10,10 +10,8 @@ async function verifyToken(token) {
             return { status: false, message: config.errorMessage.invalidJwtToken }
         else {
             logger.info("in Verify Token else case")
-            const verifieduser = await jwt.verify(token, config.jwtSecret)
-            console.log("verified user == ",verifieduser)
-            const userId = await crypto.decrypt(verifieduser, config.mobileEncryptSecForJWT)
-            console.log("verified user == great ",userId)
+            const verifieduser = await jwt.verify(token, config.secrets.jwtSecret)
+            const userId = await crypto.decrypt(verifieduser, config.secrets.mobileEncryptSecForJWT)
             const uniqueID = Math.random().toString(36).substring(2, 8);
             const result = {
                 status: true,
@@ -37,7 +35,7 @@ async function generateToken(id) {
         if (id == undefined || id == null || id.length == 0)
             return { status: false, message: config.errorMessage.invalidUserId }
         else {
-            const token = jwt.sign(id, config.jwtSecret);
+            const token = jwt.sign(id, config.secrets.jwtSecret);
             return token;
         }
     }

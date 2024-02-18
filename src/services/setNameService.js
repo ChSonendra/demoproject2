@@ -5,6 +5,7 @@ async function setName(req) {
     try {
         console.log("req == ",req)
         const userId = await userService.getUserIdUsingMobile(req.userId);
+        console.log("userId");
         const res = await userService.addName(userId, req.name)
         console.log(" res ==", res)
         if(res.status){

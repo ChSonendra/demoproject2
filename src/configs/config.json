@@ -1,14 +1,22 @@
 {
     "userFilePath": "users/",
-    "mobileEncryptSecForJWT":"4ce1b5d73ea0e81a9d39",
+    "s3Bucket": "krishimandi-users",
+    "region": "ap-south-1",
     "maxRetry": 3,
     "retryDelay": 1,
-    "jwtSecret":"1e8543bc9914586ddf6fb771",
     "jwtExpiresIn": "2d",
-    "mongooseEncSecrets": {
-        "userSec": "0242ac120002",
-        "productSec": "c83d61b8ba16",
-        "keyValueTokenSec": "bae4e307afab"
+    "secrets": {
+        "mongooseEncSecrets": {
+            "userSec": "0242ac120002",
+            "productSec": "c83d61b8ba16",
+            "keyValueTokenSec": "bae4e307afab"
+        },
+        "otpFrontendSecret": "3bc9914586ddf6fb771",
+        "jwtSecret": "1e8543bc9914586ddf6fb771",
+        "mobileEncryptSecForJWT": "4ce1b5d73ea0e81a9d39"
+    },
+    "otpApiKeyFastToSMS": {
+        "apiKey": "dNFIBcsOMaSefAXRZwHrt0YQnEvJ2m6CKpUqx5lzPGki7g3VoToGBTbLw2uC5v7UlezNix0AhkgQMEJ8"
     },
     "logs": {
         "level": "debug"
@@ -17,12 +25,20 @@
         "invalidJwtToken": "Jwt Token is not valid",
         "invalidUserId": "User Id not valid",
         "internalServerError": "Internal Server Error",
-        "otpSentFailure":"otp couldn't be sent please try again in few minutes",
-        "invalidOtp": "otp is not valid"
+        "otpSentFailure": "otp couldn't be sent please try again in few minutes",
+        "invalidOtp": "otp is not valid",
+        "frontendSecretMismatch": "invalid request",
+        "unableToPutItem":"unable to put item into dynamo db",
+        "unableToGetItem":"unable to get item from dynamo db",
+        "unableToDeleteItem":"unable to delete item from dynamo db",
+        "userNotValid": "user can't be validated"
     },
     "successMessages": {
         "otpSentSuccess": "otp sent successfully",
-        "otpverifiedSuccessfully":"otp verified successfully"
+        "itemFetched":"item fetched succefully from db",
+        "itemPut":"item put succefully from db",
+        "itemDeleted":"item deleted succefully from db",
+        "otpverifiedSuccessfully": "otp verified successfully"
     },
     "errorCatchMsg": {
         "5001": " :::: Error from generateUnqIdForRequest ::::",
@@ -32,5 +48,9 @@
         "6001": " :::: Error from verifyOtpService ::::",
         "5004": " :::: Error from listProductController ::::",
         "5005": " :::: Error from listProductService ::::"
-    }
+    },
+    "tableNames":{
+        "consumerTable": "consumerDetails"
+    },
+    "constants": {}
 }

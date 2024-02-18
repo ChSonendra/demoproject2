@@ -13,7 +13,7 @@ async function encrypt(text, key) {
     return encrypted;
     }
     catch (error) {
-        console.log("error  === ",error)
+        console.log("error here === ",error)
     }
 }
 

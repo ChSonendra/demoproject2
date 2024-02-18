@@ -22,7 +22,6 @@ async function checkIfUserExistsUsingMobile(mobileNumber) {
     }
     catch (error) {
         console.log("error == ", error)
-        // logger.info(`${req.requestId} : ${config.errorCatchMsg[6001]} Error Message :::: ${err}`)
         return {status:false}
         throw new Error(error);
     }

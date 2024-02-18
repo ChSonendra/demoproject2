@@ -6,40 +6,48 @@ const currentDir = process.cwd();
 const util = require('util');
 const utilityService = require('./utilityService')
 const { userModel } = require('../schemas/userModel')
-const fs = require('fs');
-
-const writeFileAsync = util.promisify(fs.writeFile);
-
-const fileService = require('../utilServices/fileUtility');
+const dbService = require('../utilServices/dynamoService')
+const s3util = require("./s3utility")
 
 async function fetchUserObject(mobileNumber) {
-    try{
+    try {
         const userId = await getUserIdUsingMobile(mobileNumber)
-        const fileContent = await fileService.readFile(currentDir + "/" + config.userFilePath + userId + ".json");
-        const jsonData = JSON.parse(fileContent.data);
+        const resultDb = await dbService.getItemFromDyanamoDb({ userId: userId }, config.tableNames.consumerTable)
+        if (!resultDb.status) {
+            return {
+                status: false,
+                message: "user not fetched",
+                payload: {}
+            }
+        }
         return {
             status: true,
             message: "user fetched",
-            payload: jsonData[userId]
+            payload: resultDb.payload.Item
         }
     }
     catch (error) {
         console.log("Error in fetch user", error);
     }
-
-
 }
 
 async function getUserIdUsingMobile(mobileNumber) {
-    const query = { mobile: mobileNumber };
-    const document = await userModel.findOne(query);
-    return document.userId;
+    try {
+        const query = { mobile: mobileNumber };
+        console.log("error ==== ", query)
+        const document = await userModel.findOne(query);
+        console.log("document === ", document)
+        return document.userId;
+    }
+    catch (error) {
+        console.log("get User Id error", error)
+    }
 }
 
 async function checkIfUserExistsUsingMobile(mobileNumber) {
+    console.log(mobileNumber)
     const query = { mobile: mobileNumber };
     const document = await userModel.findOne(query);
-    console.log("document ==", document)
     if (document) {
         return {
             status: true,
@@ -71,14 +79,17 @@ async function checkIfUserExistsUsingUserId(userId) {
 
 async function addMobileNumber(mobileNumber, userId) {
     try {
-        user.mobile = mobileNumber
-        user.mobile_verified = true
-        const userObject = {
-            [`${userId}`]: user
+        let userData = user
+        userData.mobile = mobileNumber
+        userData.userId = userId
+        userData.mobile_verified = true
+        const result = await dbService.putItemToDyanamoDb(userData, config.tableNames.consumerTable)
+        if (!result.status) {
+            return {
+                status: false,
+                message: result.message
+            }
         }
-        console.log("user obj ", userObject)
-        console.log(currentDir)
-        await writeFileAsync(currentDir + "/" + config.userFilePath + userId + ".json", JSON.stringify(userObject))
         const rest = {
             status: true,
             userId: userId
@@ -86,19 +97,26 @@ async function addMobileNumber(mobileNumber, userId) {
         return rest;
     }
     catch (error) {
-        console.log("error == ", error)
-        // logger.info(`${req.requestId} : ${config.errorCatchMsg[6001]} Error Message :::: ${err}`)
-        throw new Error(error);
+        return {
+            status: false,
+            message: "cannot create user"
+        }
     }
 }
 
 async function updateMobileNumber(userId, mobile) {
     try {
-        const fileContent = await fileService.readFile(currentDir + "/" + config.userFilePath + userId + ".json");
-        if (fileContent.status) {
-            const jsonData = JSON.parse(fileContent.data);
-            jsonData.userId.mobile = mobile
-            await writeFileAsync(currentDir + "/" + config.userFilePath + userId + ".json", JSON.stringify(jsonData))
+        const resultDb = await dbService.getItemFromDyanamoDb({ userId: userId }, config.tableNames.consumerTable)
+        if (resultDb.status) {
+            const jsonData = resultDb.payload.Item
+            jsonData.mobile = mobile
+            const result = await dbService.putItemToDyanamoDb(jsonData, config.tableNames.consumerTable)
+            if (!result.status) {
+                return {
+                    status: false,
+                    message: result.message
+                }
+            }
             return { status: true }
         }
         else {
@@ -117,13 +135,17 @@ async function updateMobileNumber(userId, mobile) {
 
 async function addName(userId, name) {
     try {
-        const fileContent = await fileService.readFile(currentDir + "/" + config.userFilePath + userId + ".json");
-        if (fileContent.status) {
-            console.log("user id ",userId)
-            const jsonData = JSON.parse(fileContent.data);
-            console.log("new var",jsonData)
-            jsonData[userId].name = name
-            await writeFileAsync(currentDir + "/" + config.userFilePath + userId + ".json", JSON.stringify(jsonData))
+        const resultDb = await dbService.getItemFromDyanamoDb({ userId: userId }, config.tableNames.consumerTable)
+        if (resultDb.status) {
+            const jsonData = resultDb.payload.Item
+            jsonData.name = name
+            const result = await dbService.putItemToDyanamoDb(jsonData, config.tableNames.consumerTable)
+            if (!result.status) {
+                return {
+                    status: false,
+                    message: result.message
+                }
+            }
             return { status: true }
         }
         else {
@@ -136,19 +158,25 @@ async function addName(userId, name) {
     }
     catch (error) {
         // logger.info(`${req.requestId} : ${config.errorCatchMsg[6001]} Error Message :::: ${err}`)
-        console.log("error == ",error)
+        console.log("error == ", error)
         throw new Error(error);
     }
 }
 
 async function addEmail(userId, email) {
     try {
-        const fileContent = await fileService.readFile(currentDir + "/" + config.userFilePath + userId + ".json");
-        if (fileContent.status) {
-            const jsonData = JSON.parse(fileContent.data);
-            jsonData[userId].email = email
-            jsonData[userId].email_verified = true
-            await writeFileAsync(currentDir + "/" + config.userFilePath + userId + ".json", JSON.stringify(jsonData))
+        const resultDb = await dbService.getItemFromDyanamoDb({ userId: userId }, config.tableNames.consumerTable)
+        if (resultDb.status) {
+            const jsonData = resultDb.payload.Item
+            jsonData.email = email
+            jsonData.email_verified = true
+            const result = await dbService.putItemToDyanamoDb(jsonData, config.tableNames.consumerTable)
+            if (!result.status) {
+                return {
+                    status: false,
+                    message: result.message
+                }
+            }
             return { status: true }
         }
         else {
@@ -166,12 +194,18 @@ async function addEmail(userId, email) {
 
 async function updateEmail(userId, email) {
     try {
-        const fileContent = await fileService.readFile(currentDir + "/" + config.userFilePath + userId + ".json");
-        if (fileContent.status) {
-            const jsonData = JSON.parse(fileContent.data);
-            jsonData.userId.email = email
-            jsonData.userId.email_verified = true
-            await writeFileAsync(currentDir + "/" + config.userFilePath + userId + ".json", JSON.stringify(jsonData))
+        const resultDb = await dbService.getItemFromDyanamoDb({ userId: userId }, config.tableNames.consumerTable)
+        if (resultDb.status) {
+            const jsonData = resultDb.payload.Item
+            jsonData.email = email
+            jsonData.email_verified = true
+            const result = await dbService.putItemToDyanamoDb(jsonData, config.tableNames.consumerTable)
+            if (!result.status) {
+                return {
+                    status: false,
+                    message: result.message
+                }
+            }
             return { status: true }
         }
         else {
@@ -189,11 +223,18 @@ async function updateEmail(userId, email) {
 
 async function setMobileVerified(userId, isVerified) {
     try {
-        const fileContent = await fileService.readFile(currentDir + "/" + config.userFilePath + userId + ".json");
-        if (fileContent.status) {
-            const jsonData = JSON.parse(fileContent.data);
-            jsonData.userId.mobile_verified = isVerified
-            await writeFileAsync(currentDir + "/" + config.userFilePath + userId + ".json", JSON.stringify(jsonData))
+        const resultDb = await dbService.getItemFromDyanamoDb({ userId: userId }, config.tableNames.consumerTable)
+        if (resultDb.status) {
+            const jsonData = resultDb.payload.Item
+            jsonData.mobile_verified = isVerified
+
+            const result = await dbService.putItemToDyanamoDb(jsonData, config.tableNames.consumerTable)
+            if (!result.status) {
+                return {
+                    status: false,
+                    message: result.message
+                }
+            }
             return { status: true }
         }
         else {
@@ -211,11 +252,17 @@ async function setMobileVerified(userId, isVerified) {
 
 async function setEmailVerified(userId, isVerified) {
     try {
-        const fileContent = await fileService.readFile(currentDir + "/" + config.userFilePath + userId + ".json");
-        if (fileContent.status) {
-            let jsonData = JSON.parse(fileContent.data);
-            jsonData.userId.mobile_verified = isVerified
-            await writeFileAsync(currentDir + "/" + config.userFilePath + userId + ".json", JSON.stringify(jsonData))
+        const resultDb = await dbService.getItemFromDyanamoDb({ userId: userId }, config.tableNames.consumerTable)
+        if (resultDb.status) {
+            const jsonData = resultDb.payload.Item
+            jsonData.mobile_verified = isVerified
+            const result = await dbService.putItemToDyanamoDb(jsonData, config.tableNames.consumerTable)
+            if (!result.status) {
+                return {
+                    status: false,
+                    message: result.message
+                }
+            }
             return { status: true }
         }
         else {
@@ -233,13 +280,18 @@ async function setEmailVerified(userId, isVerified) {
 
 async function addItemToCart(userId, item) {
     try {
-        const fileContent = await fileService.readFile(currentDir + "/" + config.userFilePath + userId + ".json");
-        if (fileContent.status) {
-            let jsonData = JSON.parse(fileContent.data);
-            console.log("json data", jsonData)
+        const resultDb = await dbService.getItemFromDyanamoDb({ userId: userId }, config.tableNames.consumerTable)
+        if (resultDb.status) {
+            const jsonData = resultDb.payload.Item
             item.item.cartQuantity = 1
-            jsonData[`${userId}`].cart[`${item.id}`] = item.item
-            await writeFileAsync(currentDir + "/" + config.userFilePath + userId + ".json", JSON.stringify(jsonData))
+            jsonData.cart[`${item.id}`] = item.item
+            const result = await dbService.putItemToDyanamoDb(jsonData, config.tableNames.consumerTable)
+            if (!result.status) {
+                return {
+                    status: false,
+                    message: result.message
+                }
+            }
             return { status: true }
         }
         else {
@@ -258,13 +310,19 @@ async function addItemToCart(userId, item) {
 
 async function increaseCartQuantity(userId, itemId) {
     try {
-        const fileContent = await fileService.readFile(currentDir + "/" + config.userFilePath + userId + ".json");
-        if (fileContent.status) {
-            let jsonData = JSON.parse(fileContent.data);
+        const resultDb = await dbService.getItemFromDyanamoDb({ userId: userId }, config.tableNames.consumerTable)
+        if (resultDb.status) {
+            const jsonData = resultDb.payload.Item
             console.log("json data", jsonData)
-            let quan = Number(jsonData[`${userId}`].cart[`${itemId}`].cartQuantity)
-            jsonData[`${userId}`].cart[`${itemId}`].cartQuantity = (quan + 1).toString()
-            await writeFileAsync(currentDir + "/" + config.userFilePath + userId + ".json", JSON.stringify(jsonData))
+            let quan = Number(jsonData.cart[`${itemId}`].cartQuantity)
+            jsonData.cart[`${itemId}`].cartQuantity = (quan + 1).toString()
+            const result = await dbService.putItemToDyanamoDb(jsonData, config.tableNames.consumerTable)
+            if (!result.status) {
+                return {
+                    status: false,
+                    message: result.message
+                }
+            }
             return { status: true }
         }
         else {
@@ -283,17 +341,22 @@ async function increaseCartQuantity(userId, itemId) {
 
 async function decreaseCartQuantity(userId, itemId) {
     try {
-        const fileContent = await fileService.readFile(currentDir + "/" + config.userFilePath + userId + ".json");
-        if (fileContent.status) {
-            let jsonData = JSON.parse(fileContent.data);
-            console.log("json data", jsonData)
-            let quan = Number(jsonData[`${userId}`].cart[`${itemId}`].cartQuantity)
-            if(quan == 1) {
-               await deleteItemFromCart(userId,itemId)
-               return { status: true }
+        const resultDb = await dbService.getItemFromDyanamoDb({ userId: userId }, config.tableNames.consumerTable)
+        if (resultDb.status) {
+            const jsonData = resultDb.payload.Item
+            let quan = Number(jsonData.cart[`${itemId}`].cartQuantity)
+            if (quan == 1) {
+                await deleteItemFromCart(userId, itemId)
+                return { status: true }
             }
-            jsonData[`${userId}`].cart[`${itemId}`].cartQuantity = (quan - 1).toString()
-            await writeFileAsync(currentDir + "/" + config.userFilePath + userId + ".json", JSON.stringify(jsonData))
+            jsonData.cart[`${itemId}`].cartQuantity = (quan - 1).toString()
+            const result = await dbService.putItemToDyanamoDb(jsonData, config.tableNames.consumerTable)
+            if (!result.status) {
+                return {
+                    status: false,
+                    message: result.message
+                }
+            }
             return { status: true }
         }
         else {
@@ -312,15 +375,21 @@ async function decreaseCartQuantity(userId, itemId) {
 
 async function deleteItemFromCart(userId, itemId) {
     try {
-        const fileContent = await fileService.readFile(currentDir+ "/" + config.userFilePath + userId + ".json");
-        if (fileContent.status) {
-            let jsonData = JSON.parse(fileContent.data);
-            if (jsonData[userId].cart.hasOwnProperty(itemId)) {
-                delete jsonData[userId].cart[itemId];
+        const resultDb = await dbService.getItemFromDyanamoDb({ userId: userId }, config.tableNames.consumerTable)
+        if (resultDb.status) {
+            const jsonData = resultDb.payload.Item
+            if (jsonData.cart.hasOwnProperty(itemId)) {
+                delete jsonData.cart[itemId];
             } else {
                 return { status: false, message: "item not found" }
             }
-            await writeFileAsync(currentDir + "/" + config.userFilePath + userId + ".json", JSON.stringify(jsonData))
+            const result = await dbService.putItemToDyanamoDb(jsonData, config.tableNames.consumerTable)
+            if (!result.status) {
+                return {
+                    status: false,
+                    message: result.message
+                }
+            }
             return { status: true }
         }
         else {
@@ -331,7 +400,7 @@ async function deleteItemFromCart(userId, itemId) {
         }
     }
     catch (error) {
-        console.log("error == ",error)
+        console.log("error == ", error)
         logger.info(` : ${config.errorCatchMsg[6001]} Error Message :::: ${error}`)
         throw new Error(error);
     }
@@ -339,11 +408,17 @@ async function deleteItemFromCart(userId, itemId) {
 
 async function addAddress(userId, address) {
     try {
-        const fileContent = await fileService.readFile(currentDir + "/" + config.userFilePath + userId + ".json");
-        if (fileContent.status) {
-            let jsonData = JSON.parse(fileContent.data);
-            jsonData[`${userId}`].addresses[`${address.id}`] = address.address
-            await writeFileAsync(currentDir + "/" + config.userFilePath + userId + ".json", JSON.stringify(jsonData))
+        const resultDb = await dbService.getItemFromDyanamoDb({ userId: userId }, config.tableNames.consumerTable)
+        if (resultDb.status) {
+            const jsonData = resultDb.payload.Item
+            jsonData.addresses[`${address.id}`] = address.address
+            const result = await dbService.putItemToDyanamoDb(jsonData, config.tableNames.consumerTable)
+            if (!result.status) {
+                return {
+                    status: false,
+                    message: result.message
+                }
+            }
             return { status: true }
         }
         else {
@@ -361,11 +436,18 @@ async function addAddress(userId, address) {
 
 async function removeAddress(userId, addressId) {
     try {
-        const fileContent = await fileService.readFile(currentDir + "/" + config.userFilePath + userId + ".json");
-        if (fileContent.status) {
-            let jsonData = JSON.parse(fileContent.data);
-            delete jsonData[userId].addresses[`${addressId}`]
-            await writeFileAsync(currentDir + "/" + config.userFilePath + userId + ".json", JSON.stringify(jsonData))
+        const resultDb = await dbService.getItemFromDyanamoDb({ userId: userId }, config.tableNames.consumerTable)
+        if (resultDb.status) {
+            const jsonData = resultDb.payload.Item
+            delete jsonData.addresses[`${addressId}`]
+
+            const result = await dbService.putItemToDyanamoDb(jsonData, config.tableNames.consumerTable)
+            if (!result.status) {
+                return {
+                    status: false,
+                    message: result.message
+                }
+            }
             return { status: true }
         }
         else {
@@ -383,11 +465,17 @@ async function removeAddress(userId, addressId) {
 
 async function addOrderToList(userId, order) {
     try {
-        const fileContent = await fileService.readFile(currentDir + "/" + config.userFilePath + userId + ".json");
-        if (fileContent.status) {
-            let jsonData = JSON.parse(fileContent.data);
+        const resultDb = await dbService.getItemFromDyanamoDb({ userId: userId }, config.tableNames.consumerTable)
+        if (resultDb.status) {
+            const jsonData = resultDb.payload.Item
             jsonData.orders[`${order.id}`] = order.item
-            await writeFileAsync(currentDir + "/" + config.userFilePath + userId + ".json", JSON.stringify(jsonData))
+            const result = await dbService.putItemToDyanamoDb(jsonData, config.tableNames.consumerTable)
+            if (!result.status) {
+                return {
+                    status: false,
+                    message: result.message
+                }
+            }
             return { status: true }
         }
         else {
@@ -405,11 +493,17 @@ async function addOrderToList(userId, order) {
 
 async function setOrderStatus(userId, status) {
     try {
-        const fileContent = await fileService.readFile(currentDir + "/" + config.userFilePath + userId + ".json");
-        if (fileContent.status) {
-            let jsonData = JSON.parse(fileContent.data);
+        const resultDb = await dbService.getItemFromDyanamoDb({ userId: userId }, config.tableNames.consumerTable)
+        if (resultDb.status) {
+            const jsonData = resultDb.payload.Item
             delete jsonData.addresses[`${addressId}`]
-            await writeFileAsync(currentDir + "/" + config.userFilePath + userId + ".json", JSON.stringify(jsonData))
+            const result = await dbService.putItemToDyanamoDb(jsonData, config.tableNames.consumerTable)
+            if (!result.status) {
+                return {
+                    status: false,
+                    message: result.message
+                }
+            }
             return { status: true }
         }
         else {

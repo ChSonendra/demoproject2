@@ -10,7 +10,7 @@ async function removeAddress(req) {
         if(res.status){
             return {
                 status:true,
-                message:"item added to cart",
+                message:"address removed succesfully",
                 payload: {}
             }
         }
@@ -18,7 +18,7 @@ async function removeAddress(req) {
         {
             return {
                 status:false,
-                message:"couldn't be added"
+                message:"couldn't be removed"
             }
         }
 

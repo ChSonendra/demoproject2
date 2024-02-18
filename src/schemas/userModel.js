@@ -3,9 +3,6 @@ const mongoose = require('mongoose');
 const userSchema = new mongoose.Schema({
     userId: String,
     unqId: String,
-    email: {
-        type: String,
-    },
     mobile: {
         type: String,
         unique: true,

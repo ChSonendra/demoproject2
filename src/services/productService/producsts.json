@@ -1,0 +1,657 @@
+[
+    {
+        "productId": "",
+        "name": "Zucchini",
+        "category": "Vegetable",
+        "type": "Green",
+        "minQuantity": 3,
+        "unit": "pieces",
+        "totalAvailableQuantity": 20,
+        "pricePerUnit": 35,
+        "about": "Fresh and tender green zucchinis for grilling or sautéing.",
+        "color": "Green",
+        "images": [
+            "https://krishiproductimages.s3.ap-south-1.amazonaws.com/vegetables/Zucchini/zucchini.jpg",
+            "https://krishiproductimages.s3.ap-south-1.amazonaws.com/vegetables/Zucchini/Zucchini-vines.jpg",
+            "https://krishiproductimages.s3.ap-south-1.amazonaws.com/vegetables/Zucchini/zucchini.jpg"
+        ],
+        "sellerId": "S21",
+        "sellerRating": 4.4,
+        "sellerName": "Green Vines",
+        "warehouses": [
+            {
+                "name": "Warehouse_Zucchini_1",
+                "id": "W007",
+                "quantityAvailable": 10
+            },
+            {
+                "name": "Warehouse_Zucchini_2",
+                "id": "W008",
+                "quantityAvailable": 10
+            }
+        ]
+    },
+    {
+        "productId": "",
+        "name": "Sweet Potato",
+        "category": "Vegetable",
+        "type": "Orange",
+        "minQuantity": 1,
+        "unit": "kg",
+        "totalAvailableQuantity": 20,
+        "pricePerUnit": 35,
+        "about": "Nutrient-rich orange sweet potatoes for a healthy side dish.",
+        "color": "Orange",
+        "images": [
+            "https://krishiproductimages.s3.ap-south-1.amazonaws.com/vegetables/Sweet+Potato/i3o3r9pg_sweet-potatoes_625x300.jpg"
+        ],
+        "sellerId": "S24",
+        "sellerRating": 4.6,
+        "sellerName": "Orange Harvest",
+        "warehouses": [
+            {
+                "name": "Warehouse1",
+                "id": "W005",
+                "quantityAvailable": 10
+            },
+            {
+                "name": "Warehouse2",
+                "id": "W006",
+                "quantityAvailable": 10
+            }
+            
+        ]
+    },
+    {
+        "productId": "",
+        "name": "Bottle Gourd",
+        "category": "Vegetable",
+        "type": "Long",
+        "minQuantity": 1,
+        "unit": "piece",
+        "totalAvailableQuantity": 20,
+        "pricePerUnit": 20,
+        "about": "Fresh and nutritious long bottle gourd for various culinary uses.",
+        "color": "Green",
+        "images": [
+            "https://krishiproductimages.s3.ap-south-1.amazonaws.com/vegetables/Bottle+Gourd/Loki-Long.jpg",
+            "https://krishiproductimages.s3.ap-south-1.amazonaws.com/vegetables/Bottle+Gourd/340-long-bottle-gourd-calabash-l.jpg"
+        ],
+        "sellerId": "S24",
+        "sellerRating": 4.1,
+        "sellerName": "Green Harvest",
+        "warehouses": [
+            {
+                "name": "Warehouse1",
+                "id": "W003",
+                "quantityAvailable": 10
+            },
+            {
+                "name": "Warehouse2",
+                "id": "W004",
+                "quantityAvailable": 10
+            }
+            
+        ]
+    },
+    {
+        "productId": "",
+        "name": "Bitter Gourd",
+        "category": "Vegetable",
+        "type": "Regular",
+        "minQuantity": 2,
+        "unit": "pieces",
+        "totalAvailableQuantity": 15,
+        "pricePerUnit": 30,
+        "about": "Nutrient-rich bitter gourd for various culinary uses.",
+        "color": "Green",
+        "images": [
+            "https://krishiproductimages.s3.ap-south-1.amazonaws.com/vegetables/Bitter+Gourd/Bittergourd.jpg",
+            "https://krishiproductimages.s3.ap-south-1.amazonaws.com/vegetables/Bitter+Gourd/amazing-benefits-and-uses-of-bit.jpg"
+        ],
+        "sellerId": "S24",
+        "sellerRating": 4.2,
+        "sellerName": "Green Harvest",
+        "warehouses": [
+            {
+                "name": "Warehouse1",
+                "id": "W001",
+                "quantityAvailable": 10
+            },
+            {
+                "name": "Warehouse2",
+                "id": "W002",
+                "quantityAvailable": 5
+            }
+            
+        ]
+    },
+    {
+        "productId": "",
+        "name": "Sindhuri Potato",
+        "category": "Vegetable",
+        "type": "Sindhuri Potato",
+        "minQuantity": 5,
+        "unit": "kg",
+        "totalAvailableQuantity": 400,
+        "pricePerUnit": 35,
+        "about": "Sindhuri potatoes are known for their rich flavor and versatility in cooking.",
+        "discountMatrix": "25% off for 20kg above",
+        "color": "Reddish Brown",
+        "images": [
+            "https://krishiproductimages.s3.ap-south-1.amazonaws.com/vegetables/sindhuri+potato/kufri_sinduri-sixteen_nine.jpg",
+            "https://krishiproductimages.s3.ap-south-1.amazonaws.com/vegetables/sindhuri+potato/1676279513_63e9fed99d9e3_2.jpg"
+        ],
+        "sellerId": "chirag001",
+        "sellerRating": 4.8,
+        "rating": 4.2,
+        "warehouses": [
+            {
+                "name": "Bhauti",
+                "id": "bhauti001",
+                "quantityAvailable": 100
+            },
+            {
+                "name": "Govind nagar",
+                "id": "gn001",
+                "quantityAvailable": 150
+            }
+        ],
+        "sellerName": "Chirag Gaitonde",
+        "expireDate": "9 Jan,2024",
+        "dateAdded": ""
+    },
+    {
+        "productId": "",
+        "name": "Hybrid Tomato",
+        "category": "Vegetable",
+        "type": "Tomato",
+        "minQuantity": 5,
+        "unit": "kg",
+        "totalAvailableQuantity": 800,
+        "pricePerUnit": 25,
+        "about": "Hybrid tomatoes are a perfect blend of flavor and freshness.",
+        "discountMatrix": "10% off for 20 kg or more",
+        "images": [
+            "https://krishiproductimages.s3.ap-south-1.amazonaws.com/vegetables/tomatoes/how-to-grow-tomatoes-1000x666-64108ff3d9444_n.jpg",
+            "https://krishiproductimages.s3.ap-south-1.amazonaws.com/vegetables/tomatoes/tomato_600x600.png",
+            "https://krishiproductimages.s3.ap-south-1.amazonaws.com/vegetables/tomatoes/tomatoes_helios4eos_gettyimages-edit.jpg"
+        ],
+        "sellerId": "varun001",
+        "sellerRating": 4.2,
+        "rating": 3.8,
+        "warehouses": [
+            {
+                "name": "Panki",
+                "id": "pan001",
+                "quantityAvailable": 100
+            },
+            {
+                "name": "Kalanpur",
+                "id": "kayalnpur002",
+                "quantityAvailable": 60
+            }
+        ],
+        "sellerName": "Varun Iyer",
+        "expireDate": "5 Jan,2024",
+        "dateAdded": ""
+    },
+    {
+        "productId": "",
+        "name": "Fresh Ginger",
+        "category": "Vegetable",
+        "type": "ginger",
+        "minQuantity": 0.75,
+        "unit": "kg",
+        "totalAvailableQuantity": 500,
+        "pricePerUnit": 50,
+        "about": "Fresh ginger adds a zesty flavor to your dishes and is packed with health benefits.",
+        "discountMatrix": "20% off for 15 kg or more",
+        "color": "Brown",
+        "images": [
+            "https://krishiproductimages.s3.ap-south-1.amazonaws.com/vegetables/ginger/ginger2.jpg",
+            "https://krishiproductimages.s3.ap-south-1.amazonaws.com/vegetables/ginger/ginger3.jpg"
+        ],
+        "sellerId": "cool_charchit",
+        "sellerRating": 4.6,
+        "rating": 4.1,
+        "warehouses": [
+            {
+                "name": "Panki",
+                "id": "pan001",
+                "quantityAvailable": 100
+            },
+            {
+                "name": "Kakadeo",
+                "id": "kakadeo001",
+                "quantityAvailable": 60
+            }
+        ],
+        "sellerName": "Charchit Singhaniya",
+        "expireDate": "14 Jan,2024",
+        "dateAdded": ""
+    },
+    {
+        "productId": "",
+        "name": "Fresh Carrot",
+        "category": "Vegetable",
+        "type": "Carrot",
+        "minQuantity": 0.4,
+        "unit": "kg",
+        "totalAvailableQuantity": 500,
+        "pricePerUnit": 51,
+        "about": "Fresh carrot adds a sweet and crisp flavor to your dishes and is packed with health benefits.",
+        "discountMatrix": "20% off for 10 kg or more",
+        "color": "Orange",
+        "images": [
+            "https://krishiproductimages.s3.ap-south-1.amazonaws.com/vegetables/carrot/carrot_image1.jpg",
+            "https://krishiproductimages.s3.ap-south-1.amazonaws.com/vegetables/carrot/carrot_image2.jpg"
+        ],
+        "sellerId": "lalu001",
+        "sellerRating": 4.6,
+        "rating": 4.1,
+        "warehouses": [
+            {
+                "name": "Kakadeo",
+                "id": "kakadeo001"
+            },
+            {
+                "name": "Kalanpur",
+                "id": "kayalnpur002",
+                "quantityAvailable": 60
+            }
+        ],
+        "sellerName": "Lokesh Prasad Yadav",
+        "expireDate": "20 Jan,2024",
+        "dateAdded": ""
+    },
+    {
+        "productId": "",
+        "name": "Fertilizer",
+        "category": "Fertilizer",
+        "type": "Organic Fertilizer",
+        "minQuantity": 1,
+        "unit": "packet",
+        "totalAvailableQuantity": 500,
+        "pricePerUnit": 400,
+        "about": "GrowPlus is a high-quality fertilizer, promoting healthy plant growth and improved yields.",
+        "discountMatrix": "30% off for more than 10 packets",
+        "images": [
+            "https://krishiproductimages.s3.ap-south-1.amazonaws.com/fertizers/61TNsYslK3L._SX522.jpg",
+            "https://krishiproductimages.s3.ap-south-1.amazonaws.com/fertizers/61Mrb268hrL._SX522.jpg",
+            "https://krishiproductimages.s3.ap-south-1.amazonaws.com/fertizers/61DiH3pUmiL._SX522.jpg"
+        ],
+        "sellerId": "lcb001",
+        "sellerRating": 4.5,
+        "rating": 4.8,
+        "warehouses": [
+            {
+                "name": "Panki",
+                "id": "pan001",
+                "quantityAvailable": 100
+            },
+            {
+                "name": "Kalanpur",
+                "id": "kayalnpur002",
+                "quantityAvailable": 60
+            }
+        ],
+        "sellerName": "Akshay Balakrishnan",
+        "expireDate": "4 Jan,2024",
+        "dateAdded": ""
+    },
+    {
+        "productId": "",
+        "name": "Zucchini",
+        "category": "Vegetable",
+        "type": "Green",
+        "minQuantity": 3,
+        "unit": "pieces",
+        "totalAvailableQuantity": 20,
+        "pricePerUnit": 35,
+        "about": "Fresh and tender green zucchinis for grilling or sautéing.",
+        "color": "Green",
+        "images": [
+            "https://krishiproductimages.s3.ap-south-1.amazonaws.com/vegetables/Zucchini/zucchini.jpg",
+            "https://krishiproductimages.s3.ap-south-1.amazonaws.com/vegetables/Zucchini/Zucchini-vines.jpg",
+            "https://krishiproductimages.s3.ap-south-1.amazonaws.com/vegetables/Zucchini/zucchini.jpg"
+        ],
+        "sellerId": "S21",
+        "sellerRating": 4.4,
+        "sellerName": "Green Vines",
+        "warehouses": [
+            {
+                "name": "Warehouse_Zucchini_1",
+                "id": "W007",
+                "quantityAvailable": 10
+            },
+            {
+                "name": "Warehouse_Zucchini_2",
+                "id": "W008",
+                "quantityAvailable": 10
+            }
+            
+        ]
+    },
+    {
+        "productId": "",
+        "name": "Beetroot",
+        "category": "Vegetable",
+        "type": "Purple",
+        "minQuantity": 1,
+        "unit": "kg",
+        "totalAvailableQuantity": 20,
+        "pricePerUnit": 25,
+        "about": "Sweet and earthy purple beetroot for roasting or salads.",
+        "color": "Purple",
+        "images": [
+            "https://krishiproductimages.s3.ap-south-1.amazonaws.com/vegetables/beetroot/Untitled.jpg",
+            "https://krishiproductimages.s3.ap-south-1.amazonaws.com/vegetables/beetroot/beetroot-35877e5.jpg",
+            "https://krishiproductimages.s3.ap-south-1.amazonaws.com/vegetables/beetroot/images.jpg"
+        ],
+        "sellerId": "S23",
+        "sellerRating": 4.3,
+        "sellerName": "Purple Harvest",
+        "warehouses": [
+            {
+                "name": "Warehouse_Beetroot_1",
+                "id": "W009",
+                "quantityAvailable": 10
+            },
+            {
+                "name": "Warehouse_Beetroot_2",
+                "id": "W010",
+                "quantityAvailable": 10
+            }
+            
+        ]
+    },
+    {
+        "productId": "",
+        "name": "Bell Pepper",
+        "category": "Vegetable",
+        "type": "Mixed Colors",
+        "minQuantity": 500,
+        "unit": "grams",
+        "totalAvailableQuantity": 30,
+        "pricePerUnit": 40,
+        "about": "Colorful bell peppers for adding vibrancy to your meals.",
+        "color": "Mixed",
+        "images": [
+            "https://krishiproductimages.s3.ap-south-1.amazonaws.com/vegetables/Bell+peper/h0718g1620725736012-thumb.jpg",
+            "https://krishiproductimages.s3.ap-south-1.amazonaws.com/vegetables/Bell+peper/40224092_1-fresho-bell-peppers-h.jpg"
+        ],
+        "sellerId": "S13",
+        "sellerRating": 4.5,
+        "sellerName": "Rainbow Veggies",
+        "warehouses": [
+            {
+                "name": "Warehouse_BellPepper_1",
+                "id": "W011",
+                "quantityAvailable": 20
+            },
+            {
+                "name": "Warehouse_BellPepper_2",
+                "id": "W012",
+                "quantityAvailable": 10
+            }
+            
+        ]
+    },
+    {
+        "productId": "",
+        "name": "Broccoli",
+        "category": "Vegetable",
+        "type": "Organic",
+        "minQuantity": 500,
+        "unit": "grams",
+        "totalAvailableQuantity": 25,
+        "pricePerUnit": 35,
+        "about": "Nutrient-rich organic broccoli for a wholesome meal.",
+        "color": "Green",
+        "images": [
+            "https://krishiproductimages.s3.ap-south-1.amazonaws.com/vegetables/Broccoli+/r8NK24bmcMgSib5zWKKQkW-1200-80.jpg",
+            "https://krishiproductimages.s3.ap-south-1.amazonaws.com/vegetables/Broccoli+/bbeee.jpg"
+        ],
+        "sellerId": "S15",
+        "sellerRating": 4.4,
+        "sellerName": "Green Delight",
+        "warehouses": [
+            {
+                "name": "Warehouse_Broccoli_1",
+                "id": "W013",
+                "quantityAvailable": 15
+            },
+            {
+                "name": "Warehouse_Broccoli_2",
+                "id": "W014",
+                "quantityAvailable": 10
+            }
+            
+        ]
+    },
+    {
+        "productId": "",
+        "name": "Spinach",
+        "category": "Vegetable",
+        "type": "Baby Spinach",
+        "minQuantity": 250,
+        "unit": "grams",
+        "totalAvailableQuantity": 20,
+        "pricePerUnit": 20,
+        "about": "Tender baby spinach leaves for salads and smoothies.",
+        "color": "Green",
+        "images": [
+            "https://krishiproductimages.s3.ap-south-1.amazonaws.com/vegetables/spinach+/health-benefits-of-spinach-Getty.jpg",
+            "https://krishiproductimages.s3.ap-south-1.amazonaws.com/vegetables/spinach+/spinach.jpg"
+        ],
+        "sellerId": "S16",
+        "sellerRating": 4.3,
+        "sellerName": "Green Fields",
+        "warehouses": [
+            {
+                "name": "Warehouse_Spinach_1",
+                "id": "W015",
+                "quantityAvailable": 15
+            },
+            {
+                "name": "Warehouse_Spinach_2",
+                "id": "W016",
+                "quantityAvailable": 5
+            }
+            
+        ]
+    },
+    {
+        "productId": "",
+        "name": "Apple",
+        "category": "Fruit",
+        "type": "Organic",
+        "minQuantity": 3,
+        "unit": "kg",
+        "totalAvailableQuantity": 30,
+        "pricePerUnit": 50,
+        "about": "Crispy and sweet apples from the orchards.",
+        "color": "Red",
+        "images": [
+            "https://krishiproductimages.s3.ap-south-1.amazonaws.com/fruits/apple+/Comp2-17.jpg",
+            "https://krishiproductimages.s3.ap-south-1.amazonaws.com/fruits/apple+/appple.jpg"
+        ],
+        "sellerId": "S3",
+        "sellerRating": 4.7,
+        "sellerName": "Fresh Fruits",
+        "warehouses": [
+            {
+                "name": "Warehouse_Apple_1",
+                "id": "W017",
+                "quantityAvailable": 20
+            },
+            {
+                "name": "Warehouse_Apple_2",
+                "id": "W018",
+                "quantityAvailable": 10
+            }
+            
+        ]
+    },
+    {
+        "productId": "",
+        "name": "Banana",
+        "category": "Fruit",
+        "type": "Regular",
+        "minQuantity": 2,
+        "unit": "bunch",
+        "totalAvailableQuantity": 40,
+        "pricePerUnit": 25,
+        "about": "Sweet and nutritious bananas for a quick energy boost.",
+        "color": "Yellow",
+        "images": [
+            "https://krishiproductimages.s3.ap-south-1.amazonaws.com/fruits/banana/babab.jpg",
+            "https://krishiproductimages.s3.ap-south-1.amazonaws.com/fruits/banana/banana-farming-2.jpg"
+        ],
+        "sellerId": "S4",
+        "sellerRating": 4.0,
+        "sellerName": "Yellow Harvest",
+        "warehouses": [
+            {
+                "name": "Warehouse_Banana_1",
+                "id": "W019",
+                "quantityAvailable": 30
+            },
+            {
+                "name": "Warehouse_Banana_2",
+                "id": "W020",
+                "quantityAvailable": 10
+            }
+            
+        ]
+    },
+    {
+        "productId": "",
+        "name": "Grapes",
+        "category": "Fruit",
+        "type": "Red Seedless",
+        "minQuantity": 500,
+        "unit": "grams",
+        "totalAvailableQuantity": 15,
+        "pricePerUnit": 30,
+        "about": "Fresh and sweet red seedless grapes for a healthy snack.",
+        "color": "Red",
+        "images": [
+            "https://krishiproductimages.s3.ap-south-1.amazonaws.com/fruits/grapes/grapes-1200.jpg",
+            "https://krishiproductimages.s3.ap-south-1.amazonaws.com/fruits/grapes/indian-grapes-500x500.jpg"
+        ],
+        "sellerId": "S6",
+        "sellerRating": 4.2,
+        "sellerName": "Red Vineyards",
+        "warehouses": [
+            {
+                "name": "Grapes Warehouse 1",
+                "id": "GW001",
+                "quantityAvailable": 8
+            },
+            {
+                "name": "Grapes Warehouse 2",
+                "id": "GW002",
+                "quantityAvailable": 7
+            }
+            
+        ]
+    },
+    {
+        "productId": "F2",
+        "name": "Mango",
+        "category": "Fruit",
+        "type": "Alphonso",
+        "minQuantity": 1,
+        "unit": "piece",
+        "totalAvailableQuantity": 20,
+        "pricePerUnit": 40,
+        "about": "Juicy and aromatic Alphonso mangoes from the best orchards.",
+        "color": "Orange",
+        "images": [
+            "https://krishiproductimages.s3.ap-south-1.amazonaws.com/fruits/mango/typesofmangoesinindiamidday_d.jpg",
+            "https://krishiproductimages.s3.ap-south-1.amazonaws.com/fruits/mango/69185542.jpg"
+        ],
+        "sellerId": "S5",
+        "sellerRating": 4.5,
+        "sellerName": "Mango Delight",
+        "warehouses": [
+            {
+                "name": "Mango Warehouse 1",
+                "id": "MW001",
+                "quantityAvailable": 12
+            },
+            {
+                "name": "Mango Warehouse 2",
+                "id": "MW002",
+                "quantityAvailable": 8
+            }
+            
+        ]
+    },
+    {
+        "productId": "",
+        "name": "Radish",
+        "category": "Vegetable",
+        "type": "Regular",
+        "minQuantity": 1,
+        "unit": "bunch",
+        "totalAvailableQuantity": 15,
+        "pricePerUnit": 25,
+        "about": "Crunchy and mildly spicy radishes for salads and pickles.",
+        "color": "White",
+        "images": [
+            "https://krishiproductimages.s3.ap-south-1.amazonaws.com/vegetables/Radish/Untitled.jpg",
+            "https://krishiproductimages.s3.ap-south-1.amazonaws.com/vegetables/Radish/40210077_1-joycity-white-radish.jpg"
+        ],
+        "sellerId": "S24",
+        "sellerRating": 4.2,
+        "sellerName": "White Roots",
+        "warehouses": [
+            {
+                "name": "Radish Warehouse 1",
+                "id": "RW001",
+                "quantityAvailable": 10
+            },
+            {
+                "name": "Radish Warehouse 2",
+                "id": "RW002",
+                "quantityAvailable": 5
+            }
+            
+        ]
+    },
+    {
+        "productId": "",
+        "name": "Eggplant",
+        "category": "Vegetable",
+        "type": "Regular",
+        "minQuantity": 1,
+        "unit": "piece",
+        "totalAvailableQuantity": 15,
+        "pricePerUnit": 30,
+        "about": "Fresh and versatile eggplant for various culinary uses.",
+        "color": "Purple",
+        "images": [
+            "https://krishiproductimages.s3.ap-south-1.amazonaws.com/vegetables/Eggplant/egg.jpg",
+            "https://krishiproductimages.s3.ap-south-1.amazonaws.com/vegetables/Eggplant/__opt__aboutcom__coeus__resource.jpg"
+        ],
+        "sellerId": "S24",
+        "sellerRating": 4.2,
+        "sellerName": "Purple Harvest",
+        "warehouses": [
+            {
+                "name": "Eggplant Warehouse 1",
+                "id": "EW001",
+                "quantityAvailable": 8
+            },
+            {
+                "name": "Eggplant Warehouse 2",
+                "id": "EW002",
+                "quantityAvailable": 7
+            }
+            
+        ]
+    }
+]

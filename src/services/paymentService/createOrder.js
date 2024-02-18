@@ -5,28 +5,35 @@ const { v4: uuidv4 } = require('uuid');
 const utilityService = require('../utilServices/utilityService')
 const userService = require('../utilServices/userService');
 const { userModel } = require('../schemas/userModel');
-async function getUserProfileService(req) {
+async function createUserService(req) {
     try {
         const uniqId = uuidv4();
-        console.log(" ckjnd kjc  ==",req)
-        const isUserExists = await userService.checkIfUserExistsUsingMobile(req.userId)
+        const isUserExists = await userService.checkIfUserExistsUsingMobile(req.mobileNumber)
         console.log("user exist = ", isUserExists)
-        if (isUserExists.status) {
-           const user = await userService.fetchUserObject(req.userId)
+        if (!isUserExists.status) {
+            const encryptedData = await crypto.encrypt(req.mobileNumber, config.mobileEncryptSecForJWT)
+            const userId = encryptedData.split('').reverse().join('');
+            const newUser = new userModel({
+                userId: userId,
+                unqId: uniqId,
+                email: "",
+                mobile: req.mobileNumber,
+            })
+            await newUser.save();
+            const res = await userService.addMobileNumber(req.mobileNumber, userId)
             //TO DO :::: otp send service will be integrated here 
-            console.log("usert === ",user)
-            if (user.status) {
+            if (res.status) {
                 const result = {
                     status: true,
-                    message: "user fetched Successfully",
-                    payload: user.payload
+                    message: "creates user Successfully",
+                    payload: {}
                 }
                 return result;
             }
             else {
                 const result = {
                     status: false,
-                    message: "couldn't fetch user"
+                    message: "issue while creating user"
                 }
                 return result;
             }
@@ -35,7 +42,7 @@ async function getUserProfileService(req) {
         else {
             const result = {
                 status: false,
-                message: "user doesn't Exists"
+                message: "user Already Exists"
             }
             return result;
         }
@@ -50,4 +57,4 @@ async function getUserProfileService(req) {
     }
 }
 
-module.exports.getUserProfileService = getUserProfileService
+module.exports.createUserService = createUserService

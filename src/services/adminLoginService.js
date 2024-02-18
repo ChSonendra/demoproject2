@@ -7,6 +7,8 @@ async function adminLoginService(req) {
         logger.info(`${req.requestId} In admin login Service Function`)
         for (const user of config.userInfo) {
             if (user.email === req.email && user.password === req.password) {
+                delete user.password
+                console.log(user)
                 const tokendetails = await crypto.encrypt(JSON.stringify(user), config.mobileEncryptSecForJWT);
                 const token = await utilityService.generateToken(tokendetails);
                 result = {

@@ -1,13 +1,13 @@
 const config = require('../configs/config.json');
 const logger = require('../winston');
 const apiResponseFormatter = require('../configs/apiResponse')
-const sendOtpMobile = require('../services/sendOtpService')
+const sendOtpMobile = require('../utilServices/otpService3')
 
 
 async function sendOtpController(retryAttempts, delay, req, res) {
     try {
         logger.info(`${req.requestId} : Inside sendOtpController Function`)
-         const result = await sendOtpMobile.sendOtpService(req);
+         const result = await sendOtpMobile.otpGenerateAndSend(req);
          if(result.status){
             logger.info(`${req.requestId} : Exiting sendOtpController Function`)
             res.status(apiResponseFormatter.apiSuccessStatus)

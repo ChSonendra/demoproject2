@@ -1,12 +1,13 @@
 const config = require('../configs/config.json');
 const logger = require('../winston');
 const apiResponseFormatter = require('../configs/apiResponse')
-const verifyOtpService = require('../utilServices/otpService3')
+const productListService = require('../services/productListService')
 
-async function verifyOtpController(retryAttempts, delay, req, res) {
+
+async function receiveOrderController(retryAttempts, delay, req, res) {
     try {
         logger.info(`${req.requestId} : Inside sendOtpController Function`)
-         const result = await verifyOtpService.verifyOtpService(req);
+         const result = await productListService.listProducts(req);
          if(result.status){
             logger.info(`${req.requestId} : Exiting sendOtpController Function`)
             res.status(apiResponseFormatter.apiSuccessStatus)
@@ -17,9 +18,7 @@ async function verifyOtpController(retryAttempts, delay, req, res) {
          }
          else
          {
-            console.log("controller else case")
             logger.info(`${req.requestId} : Exiting sendOtpController Function`)
-            console.log("res  == ",apiResponseFormatter.apiBadRequestStatus,"vcdsjkbvdbvf === ",apiResponseFormatter.apiFailureResponse(result.message))
             res.status(apiResponseFormatter.apiBadRequestStatus)
             res.send(apiResponseFormatter.apiFailureResponse(result.message))
          }
@@ -28,17 +27,17 @@ async function verifyOtpController(retryAttempts, delay, req, res) {
         if (retryAttempts > 0) {
             logger.info(`${req.requestId} : ${config.errorCatchMsg[5003]} Error Message :::: ${error} :::: Retrying Attempt`)
             setTimeout(
-                async () => await verifyOtpController(retryAttempts - 1, delay, req, res),
+                async () => await receiveOrderController(retryAttempts - 1, delay, req, res),
                 delay * 1000
             );
         }
         else
         {
-            logger.info(`${req.requestId} : ${config.errorCatchMsg[5003]} Error Message :::: ${error} : Final`)
+            logger.info(`${req.requestId} : ${config.errorCatchMsg[5004]} Error Message :::: ${error} : Final`)
             res.status(apiResponseFormatter.apiInternalServerErrorStatus)
             res.send(apiResponseFormatter.internalErrorResponse(config.errorMessage.internalServerError))
         }
     }
 }
 
-module.exports.verifyOtpController = verifyOtpController;
+module.exports.receiveOrderController = receiveOrderController;

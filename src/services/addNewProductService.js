@@ -1,39 +1,38 @@
 const config = require('../configs/adminConfigs.json');
 const logger = require('../winston');
-const { productModel } = require('../schemas/productModel')
+const { ProductMain } = require('../schemas/product1Schema')
 const utilityService = require('../utilServices/utilityService');
 const { v4: uuidv4 } = require('uuid');
 const mongoose = require('mongoose')
 async function addProductService(req) {
     try {
-        const uniqueID = uuidv4();
-        logger.info(`${req.requestId} In admin login Service Function`)
-        const newProduct = new productModel({
-            productId: uniqueID,
-            name: req.name,
-            addedBy: req.addedBy,
-            type: req.type,
-            color: req.color,
-            quality: req.quality,
-            price: req.price,
-            images: "https://en.m.wikipedia.org/wiki/File:Sunflower_from_Silesia2.jpg",
-            sellerId: req.sellerId,
-            sellerName: req.sellerName,
-            quantity: req.quantity,
-            about: req.about,
-            sellerRating: req.sellerRating,
-            rating: req.rating,
-            qnaId: req.qnaId,
-            expireDate: req.expireDate,
-            unitsAvailable: req.unitsAvailable,
-            quantityPerUnit: req.quantityPerUnit,
-            perUnitPrice: req.perUnitPrice
-        })
-        await newProduct.save();
-        result = {
-            status: true,
-            payload:{},
-            message: config.errorMessage.productSavedSuccessfully
+
+        logger.info(`${req.requestId} In add product Service Function`)
+        for (item in req.products) {
+            const uniqueID = uuidv4();
+            const newProduct = new ProductMain({
+                productId: uniqueID,
+                name: req.products[item].name,
+                category: req.products[item].category,
+                type: req.products[item].type,
+                minQuantity: req.products[item].minQuantity,
+                unit: req.products[item].unit,
+                totalAvailableQuantity: req.products[item].totalAvailableQuantity,
+                pricePerUnit: req.products[item].pricePerUnit,
+                about: req.products[item].about,
+                color: req.products[item].color,
+                images: req.products[item].images,
+                sellerId: req.products[item].sellerId,
+                sellerRating: req.products[item].sellerRating,
+                warehouses: req.products[item].warehouses,
+                sellerName: req.products[item].sellerName,
+            })
+            await newProduct.save();
+            result = {
+                status: true,
+                payload: {},
+                message: config.errorMessage.productSavedSuccessfully
+            }
         }
         logger.info(`Exiting admin login Service Function`)
         return result;

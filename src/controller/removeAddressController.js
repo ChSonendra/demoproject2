@@ -6,7 +6,7 @@ const removeAddress = require('../services/removeAddressService')
 async function removeAddressController(retryAttempts, delay, req, res) {
     try {
         logger.info(`${req.requestId} : Inside sendOtpController Function`)
-        console.log(req)
+        console.log(req ," ====== ", "+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++")
          const result = await removeAddress.removeAddress(req);
          if(result.status){
             logger.info(`${req.requestId} : Exiting sendOtpController Function`)
